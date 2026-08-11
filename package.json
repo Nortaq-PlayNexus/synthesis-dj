@@ -73,8 +73,7 @@
         "AppImage",
         "deb"
       ],
-      "category": "AudioVideo",
-      "desktopName": "SYNTHESIS AI DJ Command System"
+      "category": "AudioVideo"
     }
   },
   "devDependencies": {
