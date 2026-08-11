@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build installers
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            target: --win
+          - os: macos-latest
+            target: --mac
+          - os: ubuntu-latest
+            target: --linux
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx electron-builder ${{ matrix.target }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ matrix.os }}
+          path: dist/*
+
+  publish:
+    name: Publish release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Draft GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*
+          generate_release_notes: true

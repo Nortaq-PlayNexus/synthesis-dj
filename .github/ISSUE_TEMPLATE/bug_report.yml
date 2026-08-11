@@ -1,0 +1,58 @@
+name: Bug report
+description: Report a reproducible problem with SYNTHESIS
+title: '[Bug] '
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report an issue. Please fill in as much detail as you can.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `npm run verify` or the app version from Help > About.
+      placeholder: '1.0.0'
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS
+        - Linux
+      default: 0
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: What did you do, and what happened?
+      placeholder: |
+        1. Load two tracks...
+        2. Engage SYNC...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should have happened?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What actually happened? Include console output if relevant (Ctrl+Shift+I in the app).
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Verification
+      options:
+        - label: I have reproduced this on a fresh `npm ci` install
+          required: false

@@ -1,0 +1,7 @@
+node_modules
+dist
+release
+out
+coverage
+package-lock.json
+*.png

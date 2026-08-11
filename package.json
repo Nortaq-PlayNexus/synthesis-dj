@@ -1,0 +1,89 @@
+{
+  "name": "synthesis-dj",
+  "version": "1.0.0",
+  "description": "SYNTHESIS AI DJ Command System - a military-grade autonomous music intelligence platform with real-time beat, key and energy analysis, AI transition direction, and autonomous mixing.",
+  "main": "src/main/main.js",
+  "author": {
+    "name": "Nortaq-PlayNexus"
+  },
+  "license": "MIT",
+  "keywords": [
+    "dj",
+    "ai",
+    "music",
+    "beat-detection",
+    "key-detection",
+    "mixing",
+    "electron",
+    "dsp",
+    "camelot",
+    "automation"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "smoke": "cross-env SYNTH_SMOKE=1 electron .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "screenshots": "cross-env SYNTH_CAPTURE=1 electron .",
+    "assets": "node scripts/generate-assets.js",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win",
+    "verify": "npm run lint && npm run format:check && npm test && npm run smoke"
+  },
+  "build": {
+    "appId": "com.nortaq.synthesis-dj",
+    "productName": "SYNTHESIS AI DJ Command System",
+    "artifactName": "${name}-${version}-${os}-${arch}.${ext}",
+    "files": [
+      "src/**/*",
+      "assets/**/*"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "icon": "assets/logo.png",
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.music"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "AudioVideo"
+    }
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@vitest/coverage-v8": "^3.2.7",
+    "cross-env": "^7.0.3",
+    "electron": "latest",
+    "electron-builder": "^26.0.0",
+    "eslint": "^9.0.0",
+    "globals": "^15.0.0",
+    "prettier": "^3.0.0",
+    "vitest": "^3.0.0"
+  }
+}

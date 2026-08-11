@@ -1,0 +1,41 @@
+name: Feature request
+description: Suggest a capability for the SYNTHESIS command system
+title: '[Feature] '
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tell us what you want the system to do that it cannot do today.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What limitation or workflow gap does this address?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: How should the system behave once this ships?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any workarounds or partial approaches you have tried.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Beat / Harmonic Intelligence
+        - Transition Director
+        - Neural Effects
+        - UI / Command Center
+        - Packaging / Platform
+        - Documentation
+        - Other
+      default: 6

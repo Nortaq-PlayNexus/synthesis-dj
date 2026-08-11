@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:; connect-src *;"
+    />
+    <title>SYNTHESIS AI DJ COMMAND SYSTEM</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div id="boot-overlay">
+      <div class="boot-inner">
+        <div class="boot-logo">SYNTHESIS<span class="blink">_</span></div>
+        <div class="boot-sub">AI DJ COMMAND SYSTEM v1.0</div>
+        <div class="boot-bar"><div class="boot-fill" id="boot-fill"></div></div>
+        <div class="boot-status" id="boot-status">Initializing neural core...</div>
+      </div>
+    </div>
+
+    <div id="app" class="hidden">
+      <!-- ============ TOP: AI COMMAND CENTER ============ -->
+      <header id="topbar">
+        <div class="brand">
+          <span class="brand-logo">SYNTHESIS</span>
+          <span class="brand-sub">AI DJ COMMAND SYSTEM</span>
+        </div>
+        <div class="status-cluster">
+          <div class="status-item">
+            <span class="label">SYSTEM</span>
+            <span class="value ok" id="sys-status">ONLINE</span>
+          </div>
+          <div class="status-item">
+            <span class="label">NEURAL CORE</span>
+            <span class="value" id="neural-status">STANDBY</span>
+          </div>
+          <div class="status-item">
+            <span class="label">ANALYSIS</span>
+            <span class="value" id="analysis-status">IDLE</span>
+          </div>
+          <div class="status-item">
+            <span class="label">AUDIO</span>
+            <span class="value" id="audio-status">--</span>
+          </div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+          <div class="progress-label" id="progress-label">READY</div>
+        </div>
+        <div class="clock" id="clock">--:--:--</div>
+      </header>
+
+      <!-- ============ MAIN BATTLEFIELD ============ -->
+      <main id="battlefield">
+        <!-- LEFT: MUSIC INTELLIGENCE PANEL -->
+        <aside id="left-panel" class="panel">
+          <div class="panel-title">MUSIC INTELLIGENCE</div>
+
+          <div id="active-track-block">
+            <div class="meta-kicker">ACTIVE TRACK / DECK A</div>
+            <div class="track-name" id="ai-track-name">NO TRACK LOADED</div>
+            <div class="readout-grid">
+              <div class="readout">
+                <span class="ro-label">BPM</span><span class="ro-value big" id="ro-bpm">--</span>
+              </div>
+              <div class="readout">
+                <span class="ro-label">KEY</span><span class="ro-value big" id="ro-key">--</span>
+              </div>
+              <div class="readout">
+                <span class="ro-label">CAMELOT</span
+                ><span class="ro-value" id="ro-camelot">--</span>
+              </div>
+              <div class="readout">
+                <span class="ro-label">ENERGY</span><span class="ro-value" id="ro-energy">--</span>
+              </div>
+              <div class="readout">
+                <span class="ro-label">GENRE</span><span class="ro-value" id="ro-genre">--</span>
+              </div>
+              <div class="readout">
+                <span class="ro-label">DNA</span><span class="ro-value" id="ro-dna">--</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="energy-vis">
+            <div class="sub-title">EMOTION FLOW ENGINE</div>
+            <canvas id="energy-canvas" width="280" height="90"></canvas>
+            <div class="emotion-tags">
+              <span class="tag" id="emotion-profile">--</span>
+            </div>
+          </div>
+
+          <div class="ai-recs">
+            <div class="sub-title">AI RECOMMENDATIONS</div>
+            <div class="scanline"></div>
+            <div id="rec-list" class="rec-list">
+              <div class="empty-hint">Load tracks to begin neural analysis</div>
+            </div>
+          </div>
+
+          <div class="playlist-panel">
+            <div class="pl-head">
+              <div class="sub-title">PLAYLIST QUEUE</div>
+              <label class="switch-row"
+                ><span>AUTO ADVANCE</span><input type="checkbox" id="toggle-advance" checked
+              /></label>
+              <button class="btn small ghost" id="btn-pl-clear">CLEAR</button>
+            </div>
+            <div class="scanline"></div>
+            <div class="pl-meta" id="pl-meta">0 TRACKS STAGED</div>
+            <div id="pl-list" class="pl-list">
+              <div class="empty-hint">Load tracks to build the playlist queue</div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- CENTER: WAVEFORM BATTLEFIELD -->
+        <section id="center-panel">
+          <div class="battle-header">
+            <div class="battle-title">TEMPORAL BATTLEFIELD</div>
+            <div class="battle-meta" id="battle-meta">AWAITING INPUT</div>
+          </div>
+          <canvas id="wave-canvas"></canvas>
+          <div class="battle-legend">
+            <span><i class="lg deckA"></i> DECK A</span>
+            <span><i class="lg deckB"></i> DECK B</span>
+            <span><i class="lg phrase"></i> PHRASE</span>
+            <span><i class="lg drop"></i> PREDICTED DROP</span>
+            <span><i class="lg aipoint"></i> AI DECISION POINT</span>
+          </div>
+
+          <div class="master-strip">
+            <div class="crossfader-wrap">
+              <div class="cf-label">CROSSFADER</div>
+              <div class="cf-track" id="cf-track">
+                <div class="cf-knob" id="cf-knob"></div>
+              </div>
+              <div class="cf-caps"><span>A</span><span>B</span></div>
+            </div>
+            <div class="master-meters">
+              <div class="meter">
+                <div class="meter-bar" id="master-meter"></div>
+                <span>MASTER</span>
+              </div>
+            </div>
+            <div class="master-controls">
+              <button id="btn-masterfilter" class="btn ghost">FILTER SWEEP</button>
+              <label class="switch-row"
+                ><span>AUTO MIX</span><input type="checkbox" id="toggle-automix"
+              /></label>
+              <button id="btn-load" class="btn primary">LOAD TRACKS</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- RIGHT: AUTONOMOUS CONTROL PANEL -->
+        <aside id="right-panel" class="panel">
+          <div class="panel-title">AUTONOMOUS CONTROL</div>
+
+          <div class="mode-select">
+            <div class="mode-btn" data-mode="ASSIST">ASSIST</div>
+            <div class="mode-btn active" data-mode="HYBRID">HYBRID</div>
+            <div class="mode-btn" data-mode="AUTONOMOUS">AUTONOMOUS</div>
+          </div>
+
+          <div class="ai-sliders">
+            <label>MIXING AI LEVEL <span id="v-mixing">70</span></label>
+            <input type="range" id="s-mixing" min="0" max="100" value="70" />
+            <label>CREATIVITY LEVEL <span id="v-creativity">60</span></label>
+            <input type="range" id="s-creativity" min="0" max="100" value="60" />
+            <label>TRANSITION STYLE</label>
+            <select id="s-style">
+              <option value="cinematic" selected>CINEMATIC</option>
+              <option value="aggressive">AGGRESSIVE</option>
+              <option value="smooth">SMOOTH</option>
+              <option value="minimal">MINIMAL</option>
+            </select>
+            <label>CROWD MODE</label>
+            <select id="s-crowd">
+              <option value="balanced" selected>BALANCED</option>
+              <option value="peak_hunting">PEAK HUNTING</option>
+              <option value="build_up">BUILD UP</option>
+              <option value="cool_down">COOL DOWN</option>
+            </select>
+          </div>
+
+          <div class="ai-console">
+            <div class="sub-title">NEURAL COMMAND FEED</div>
+            <div id="ai-feed" class="ai-feed"></div>
+          </div>
+
+          <details class="llm-settings">
+            <summary>NEURAL ADVISOR (OPTIONAL LLM)</summary>
+            <div class="llm-row">
+              <label>Base URL</label>
+              <input type="text" id="llm-url" placeholder="https://openrouter.ai/api/v1" />
+            </div>
+            <div class="llm-row">
+              <label>API Key</label>
+              <input type="password" id="llm-key" placeholder="sk-..." />
+            </div>
+            <div class="llm-row">
+              <label>Model</label>
+              <input type="text" id="llm-model" placeholder="e.g. openai/gpt-4o-mini" />
+            </div>
+            <div class="llm-row">
+              <button id="btn-llm" class="btn ghost small">ENGAGE NEURAL ADVISOR</button>
+              <span class="llm-state" id="llm-state">OFFLINE TACTICAL ENGINE</span>
+            </div>
+          </details>
+        </aside>
+      </main>
+
+      <!-- ============ BOTTOM: PRO DECKS ============ -->
+      <section id="decks">
+        <div class="deck" id="deck-A">
+          <div class="deck-head">
+            <span class="deck-tag">DECK A</span>
+            <span class="deck-track" id="track-name-A">EMPTY SLOT</span>
+            <span class="deck-meta" id="deck-meta-A">-- BPM / -- KEY</span>
+            <div class="head-meter" id="meter-A-wrap">
+              <div class="meter-bar"><div id="meter-A"></div></div>
+            </div>
+          </div>
+          <canvas class="deck-wave" id="wave-A" height="60"></canvas>
+          <div class="deck-body">
+            <div class="deck-info">
+              <div class="big-readout">
+                <div class="br-label">BPM</div>
+                <div class="br-value" id="bpm-A">--</div>
+              </div>
+              <div class="big-readout">
+                <div class="br-label">KEY</div>
+                <div class="br-value" id="key-A">--</div>
+              </div>
+              <div class="big-readout">
+                <div class="br-label">BEAT</div>
+                <div class="br-value" id="beat-A">0</div>
+              </div>
+              <div class="big-readout">
+                <div class="br-label">TIME</div>
+                <div class="br-value" id="time-A">0:00</div>
+              </div>
+            </div>
+
+            <div class="jog-wrap">
+              <canvas class="jog" id="jog-A" width="150" height="150"></canvas>
+              <div class="jog-center" id="jog-center-A">A</div>
+            </div>
+
+            <div class="deck-controls">
+              <div class="btn-row">
+                <button class="btn transport" id="play-A">PLAY</button>
+                <button class="btn transport" id="cue-A">CUE</button>
+                <button class="btn transport" id="sync-A">SYNC</button>
+              </div>
+              <div class="btn-row">
+                <button class="btn small" id="loop-A">LOOP 4</button>
+                <button class="btn small" id="loopclear-A">LOOP OFF</button>
+                <button class="btn small" id="fx-riser-A">AI RISER</button>
+              </div>
+              <div class="pitch-row">
+                <span class="pitch-val" id="pitch-A">0.0%</span>
+                <input type="range" id="pitch-slider-A" min="-8" max="8" step="0.1" value="0" />
+              </div>
+              <div class="stem-matrix">
+                <div class="sm-col">
+                  <span>BASS</span>
+                  <input
+                    type="range"
+                    id="eq-low-A"
+                    min="-85"
+                    max="10"
+                    value="0"
+                    orient="vertical"
+                    class="vert"
+                  />
+                </div>
+                <div class="sm-col">
+                  <span>DRUM</span>
+                  <input
+                    type="range"
+                    id="eq-mid-A"
+                    min="-85"
+                    max="10"
+                    value="0"
+                    orient="vertical"
+                    class="vert"
+                  />
+                </div>
+                <div class="sm-col">
+                  <span>VOX</span>
+                  <input
+                    type="range"
+                    id="eq-high-A"
+                    min="-85"
+                    max="10"
+                    value="0"
+                    orient="vertical"
+                    class="vert"
+                  />
+                </div>
+                <div class="sm-col">
+                  <span>FX AMT</span>
+                  <input
+                    type="range"
+                    id="fx-amt-A"
+                    min="0"
+                    max="100"
+                    value="0"
+                    orient="vertical"
+                    class="vert"
+                  />
+                </div>
+                <div class="sm-col">
+                  <span>VOL</span>
+                  <input
+                    type="range"
+                    id="vol-A"
+                    min="0"
+                    max="150"
+                    value="85"
+                    orient="vertical"
+                    class="vert"
+                  />
+                </div>
+              </div>
+              <select id="fx-type-A" class="fx-select">
+                <option value="none">FX OFF</option>
+                <option value="echo">ECHO</option>
+                <option value="beatEcho" selected>BEAT ECHO</option>
+                <option value="reverb">REVERB</option>
+                <option value="filter">FILTER</option>
+                <option value="riser">RISER</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="deck" id="deck-B">
+          <div class="deck-head">
+            <span class="deck-tag deckB">DECK B</span>
+            <span class="deck-track" id="track-name-B">EMPTY SLOT</span>
+            <span class="deck-meta" id="deck-meta-B">-- BPM / -- KEY</span>
+            <div class="head-meter" id="meter-B-wrap">
+              <div class="meter-bar"><div id="meter-B"></div></div>
+            </div>
+          </div>
+          <canvas class="deck-wave" id="wave-B" height="60"></canvas>
+          <div class="deck-body">
+            <div class="deck-info">
+              <div class="big-readout">
+                <div class="br-label">BPM</div>
+                <div class="br-value" id="bpm-B">--</div>
+              </div>
+              <div class="big-readout">
+                <div class="br-label">KEY</div>
+                <div class="br-value" id="key-B">--</div>
+              </div>
+              <div class="big-readout">
+                <div class="br-label">BEAT</div>
+                <div class="br-value" id="beat-B">0</div>
+              </div>
+              <div class="big-readout">
+                <div class="br-label">TIME</div>
+                <div class="br-value" id="time-B">0:00</div>
+              </div>
+            </div>
+
+            <div class="jog-wrap">
+              <canvas class="jog" id="jog-B" width="150" height="150"></canvas>
+              <div class="jog-center" id="jog-center-B">B</div>
+            </div>
+
+            <div class="deck-controls">
+              <div class="btn-row">
+                <button class="btn transport" id="play-B">PLAY</button>
+                <button class="btn transport" id="cue-B">CUE</button>
+                <button class="btn transport" id="sync-B">SYNC</button>
+              </div>
+              <div class="btn-row">
+                <button class="btn small" id="loop-B">LOOP 4</button>
+                <button class="btn small" id="loopclear-B">LOOP OFF</button>
+                <button class="btn small" id="fx-riser-B">AI RISER</button>
+              </div>
+              <div class="pitch-row">
+                <span class="pitch-val" id="pitch-B">0.0%</span>
+                <input type="range" id="pitch-slider-B" min="-8" max="8" step="0.1" value="0" />
+              </div>
+              <div class="stem-matrix">
+                <div class="sm-col">
+                  <span>BASS</span>
+                  <input
+                    type="range"
+                    id="eq-low-B"
+                    min="-85"
+                    max="10"
+                    value="0"
+                    orient="vertical"
+                    class="vert"
+                  />
+                </div>
+                <div class="sm-col">
+                  <span>DRUM</span>
+                  <input
+                    type="range"
+                    id="eq-mid-B"
+                    min="-85"
+                    max="10"
+                    value="0"
+                    orient="vertical"
+                    class="vert"
+                  />
+                </div>
+                <div class="sm-col">
+                  <span>VOX</span>
+                  <input
+                    type="range"
+                    id="eq-high-B"
+                    min="-85"
+                    max="10"
+                    value="0"
+                    orient="vertical"
+                    class="vert"
+                  />
+                </div>
+                <div class="sm-col">
+                  <span>FX AMT</span>
+                  <input
+                    type="range"
+                    id="fx-amt-B"
+                    min="0"
+                    max="100"
+                    value="0"
+                    orient="vertical"
+                    class="vert"
+                  />
+                </div>
+                <div class="sm-col">
+                  <span>VOL</span>
+                  <input
+                    type="range"
+                    id="vol-B"
+                    min="0"
+                    max="150"
+                    value="85"
+                    orient="vertical"
+                    class="vert"
+                  />
+                </div>
+              </div>
+              <select id="fx-type-B" class="fx-select">
+                <option value="none">FX OFF</option>
+                <option value="echo">ECHO</option>
+                <option value="beatEcho" selected>BEAT ECHO</option>
+                <option value="reverb">REVERB</option>
+                <option value="filter">FILTER</option>
+                <option value="riser">RISER</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>
