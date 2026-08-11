@@ -28,14 +28,20 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - run: npx electron-builder ${{ matrix.target }}
+      - run: npx electron-builder ${{ matrix.target }} --publish never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
       - uses: actions/upload-artifact@v4
         with:
           name: dist-${{ matrix.os }}
-          path: dist/*
+          path: |
+            dist/*.AppImage
+            dist/*.deb
+            dist/*.dmg
+            dist/*.exe
+            dist/*.zip
+            dist/*.blockmap
 
   publish:
     name: Publish release
