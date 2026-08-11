@@ -4,7 +4,8 @@
   "description": "SYNTHESIS AI DJ Command System - a military-grade autonomous music intelligence platform with real-time beat, key and energy analysis, AI transition direction, and autonomous mixing.",
   "main": "src/main/main.js",
   "author": {
-    "name": "Nortaq-PlayNexus"
+    "name": "Nortaq-PlayNexus",
+    "email": "311333767+Nortaq-PlayNexus@users.noreply.github.com"
   },
   "license": "MIT",
   "keywords": [
@@ -72,7 +73,9 @@
         "AppImage",
         "deb"
       ],
-      "category": "AudioVideo"
+      "category": "AudioVideo",
+      "desktopName": "SYNTHESIS AI DJ Command System",
+      "syncDesktopName": true
     }
   },
   "devDependencies": {
