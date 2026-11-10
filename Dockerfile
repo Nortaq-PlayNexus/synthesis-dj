@@ -1,4 +1,4 @@
-FROM node:20-bookworm
+FROM node:24-bookworm
 
 ENV SYNTH_SMOKE=1 \
     ELECTRON_DISABLE_SANDBOX=1

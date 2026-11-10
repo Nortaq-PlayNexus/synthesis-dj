@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain, dialog, Menu, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const { runSmokeCheck } = require('./smoke-check');
 
 let mainWindow = null;
 
@@ -45,9 +46,13 @@ function runSmokeTest(win) {
     console.log('DID_FAIL_LOAD', code, desc);
     app.exit(1);
   });
-  win.webContents
-    .executeJavaScript(
-      `(async () => {
+  runSmokeCheck(
+    () =>
+      new Promise((resolve, reject) => {
+        const analyze = () =>
+          win.webContents
+            .executeJavaScript(
+              `(async () => {
         try {
           const ctx = new (window.AudioContext || window.webkitAudioContext)();
           const sr = 22050, dur = 20, bpm = 128, beat = 60 / bpm, n = sr * dur;
@@ -61,17 +66,29 @@ function runSmokeTest(win) {
           const mod = await import('./js/analyzer.js');
           const res = await mod.analyzeAudioBuffer(buf, () => {});
           console.log('[SMOKE-ANALYSIS] BPM=' + res.bpm.toFixed(2) + ' KEY=' + res.key.name.toUpperCase() + ' CAMELOT=' + res.key.camelot + ' BEATS=' + res.beatTimes.length + ' DROPS=' + res.energy.peaks.length);
+          if (!Number.isFinite(res.bpm) || res.bpm <= 0 || !res.beatTimes.length) {
+            throw new Error('Invalid analysis output');
+          }
           console.log('[SMOKE-ANALYSIS] OK');
+          return true;
         } catch (e) {
           console.log('[SMOKE-ANALYSIS] ERROR ' + e.message);
+          throw e;
         }
       })();`,
-    )
-    .catch((e) => console.log('[SMOKE-ANALYSIS] ERROR ' + e.message));
-  setTimeout(() => {
-    console.log('SMOKE_COMPLETE');
-    app.exit(0);
-  }, 10000);
+            )
+            .then(resolve, reject);
+        if (win.webContents.isLoading()) {
+          win.webContents.once('did-finish-load', analyze);
+        } else {
+          analyze();
+        }
+      }),
+    (code) => {
+      console.log(code === 0 ? 'SMOKE_COMPLETE' : 'SMOKE_FAILED');
+      app.exit(code);
+    },
+  );
 }
 
 async function runCapture(win) {

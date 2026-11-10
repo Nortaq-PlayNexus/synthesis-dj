@@ -55,9 +55,9 @@ process injects a script that synthesizes a 20-second 128 BPM buffer, runs
 SMOKE_COMPLETE
 ```
 
-Exit code is non-zero if the app failed to load or the analysis threw. **On Windows
-the smoke failure path prints no detail** — exit code only. For full error text run
-`npm test` or a direct `node`/JS invocation of the analyzer.
+Exit code is nonzero if the app fails to load, analysis throws, output is invalid, or the 30-second deadline expires. Success requires an explicit renderer result. The values above illustrate the log format; use the actual run output. Unit tests cover success, rejection, synchronous errors, invalid results, timeout and late completion.
+
+The November 2026 review ran these unit tests on Linux but did not launch the desktop smoke test or capture new screenshots.
 
 ## Regenerating assets
 
