@@ -6,11 +6,11 @@
 
 # SYNTHESIS :: AI DJ COMMAND SYSTEM
 
-**A military-grade autonomous music intelligence platform.** Real-time beat, key and energy analysis. AI transition direction. Autonomous mixing. Runs fully offline — no cloud, no tracking, no subscription.
+**A local-first DJ workstation with automated analysis and mixing.** Real-time beat, key and energy analysis. AI transition direction. Autonomous mixing. Core audio analysis runs locally. The optional Neural Advisor sends requests to the endpoint you configure.
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/LICENSE-MIT-ff3b3b?style=flat-square&labelColor=0a0e1a" alt="license"/></a>
-  <img src="https://img.shields.io/badge/NODE-%E2%89%A518-3dd5ff?style=flat-square&logo=node.js&logoColor=3dd5ff&labelColor=0a0e1a" alt="node"/>
+  <img src="https://img.shields.io/badge/NODE-24%20LTS-3dd5ff?style=flat-square&logo=node.js&logoColor=3dd5ff&labelColor=0a0e1a" alt="node"/>
   <img src="https://img.shields.io/badge/ENGINE-WEB%20AUDIO-00E5FF?style=flat-square&labelColor=0a0e1a" alt="engine"/>
   <img src="https://img.shields.io/badge/MODES-ASSIST%20%2F%20HYBRID%20%2F%20AUTO-B8FF1E?style=flat-square&labelColor=0a0e1a" alt="modes"/>
   <a href="https://github.com/Nortaq-PlayNexus/synthesis-dj/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/Nortaq-PlayNexus/synthesis-dj/ci.yml?style=flat-square&label=CI&labelColor=0a0e1a&color=B8FF1E" alt="ci"/></a>
@@ -33,7 +33,7 @@ LINK .......... /synthesis-dj
 
 ## // 01 :: SIGNAL
 
-SYNTHESIS is an Electron + Web Audio DJ workstation that treats every track like a **mission target**: it decodes the waveform, extracts tempo, key, energy and structure, compiles a compact **Music DNA** fingerprint per song, then runs an in-browser AI Transition Director that decides *when* and *how* to move between decks.
+SYNTHESIS is an Electron + Web Audio DJ workstation that treats every track like a **mission target**: it decodes the waveform, extracts tempo, key, energy and structure, compiles a compact **Music DNA** fingerprint per song, then runs an in-browser AI Transition Director that decides _when_ and _how_ to move between decks.
 
 Everything runs locally. The optional **Neural Advisor** can stream tactical narratives from any OpenAI-compatible endpoint (OpenRouter, local Ollama, etc.) — but it's never required.
 
@@ -69,12 +69,12 @@ Everything runs locally. The optional **Neural Advisor** can stream tactical nar
 
 ## // 03 :: THE COMMAND CENTER
 
-| Command Center | Autonomous Mix |
-|:---:|:---:|
+|                      Command Center                      |                      Autonomous Mix                      |
+| :------------------------------------------------------: | :------------------------------------------------------: |
 | ![Command Center](assets/screenshots/command-center.png) | ![Autonomous Mix](assets/screenshots/autonomous-mix.png) |
 
-| Command Bar |
-|:---:|
+|                    Command Bar                     |
+| :------------------------------------------------: |
 | ![Command Bar](assets/screenshots/command-bar.png) |
 
 > Screenshots are generated from real render passes (`npm run screenshots`). See [docs/development.md](docs/development.md).
@@ -90,7 +90,7 @@ $ npm ci
 $ npm start
 ```
 
-Requires **Node.js 18+** and a desktop platform with a working Chromium sandbox (Windows, macOS or Linux).
+Requires **Node.js 24 LTS** and a desktop platform with a working Chromium sandbox (Windows, macOS or Linux).
 
 ---
 
@@ -108,16 +108,16 @@ Requires **Node.js 18+** and a desktop platform with a working Chromium sandbox 
 
 ## // 06 :: CONSOLE COMMANDS (SCRIPTS)
 
-| Script | Purpose |
-|---|---|
-| `npm start` | launch the app |
-| `npm run smoke` | headless smoke test of the analysis engine inside Electron |
-| `npm test` | Vitest unit + integration suite |
-| `npm run lint` / `npm run format` | enforce ESLint + Prettier |
-| `npm run screenshots` | regenerate real UI screenshots |
-| `npm run assets` | regenerate screenshots + logo render |
-| `npm run dist` / `dist:win` | build distributable installers (electron-builder) |
-| `npm run verify` | lint + format + tests + smoke, all in one |
+| Script                            | Purpose                                                    |
+| --------------------------------- | ---------------------------------------------------------- |
+| `npm start`                       | launch the app                                             |
+| `npm run smoke`                   | headless smoke test of the analysis engine inside Electron |
+| `npm test`                        | Vitest unit + integration suite                            |
+| `npm run lint` / `npm run format` | enforce ESLint + Prettier                                  |
+| `npm run screenshots`             | regenerate real UI screenshots                             |
+| `npm run assets`                  | regenerate screenshots + logo render                       |
+| `npm run dist` / `dist:win`       | build distributable installers (electron-builder)          |
+| `npm run verify`                  | lint + format + tests + smoke, all in one                  |
 
 ---
 
